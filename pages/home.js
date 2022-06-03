@@ -7,7 +7,7 @@ import { getTweets } from 'lib/data.js'
 
 
 
-export default function Home(tweets) {
+export default function Home({tweets}) {
   const { data: session, status } = useSession()
   const loading = status === 'loading'
   const router = useRouter()
@@ -19,7 +19,10 @@ export default function Home(tweets) {
   if (!session) {
     router.push('/')
   }
-
+  if (session && !session.user.name) {
+    router.push('/setup')
+  }
+  
   return (
   <>
   <NewTweet />
